@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.8" icons="true">  
+  <object id="1" language="java" name="be.bomberman.main.Bomberman" project="Bomberman-dgomezde-egrigori-zbeyens" 
+    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/Bomberman.java" binary="false" label="bomberman" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="169" y="0"/>    
+    <execution id="2">      
+      <position height="460" width="0" x="0" y="607"/>    
+    </execution>    
+    <execution id="4">      
+      <position height="316" width="0" x="0" y="703"/>    
+    </execution>    
+    <execution id="7">      
+      <position height="192" width="0" x="0" y="157"/>    
+    </execution>    
+    <execution id="9">      
+      <position height="48" width="0" x="0" y="253"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="1360" width="0" x="0" y="1106"/>    
+    </execution>    
+    <execution id="12">      
+      <position height="1216" width="0" x="0" y="1202"/>    
+    </execution>    
+    <execution id="17">      
+      <position height="192" width="0" x="0" y="367"/>    
+    </execution>    
+    <execution id="19">      
+      <position height="48" width="0" x="0" y="463"/>    
+    </execution>    
+    <execution id="20">      
+      <position height="192" width="0" x="0" y="2503"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="48" width="0" x="0" y="2599"/>    
+    </execution>  
+  </object>  
+  <object id="23" language="java" name="be.bomberman.main.levels.Level" project="Bomberman-dgomezde-egrigori-zbeyens" 
+    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/Level.java" binary="false" label="level" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="514" y="0"/>    
+    <execution id="6">      
+      <position height="330" width="0" x="0" y="641"/>    
+    </execution>    
+    <execution id="25">      
+      <position height="186" width="0" x="0" y="737"/>    
+    </execution>    
+    <execution id="16">      
+      <position height="513" width="0" x="0" y="1857"/>    
+    </execution>    
+    <execution id="29">      
+      <position height="48" width="0" x="0" y="2022"/>    
+    </execution>    
+    <execution id="14">      
+      <position height="429" width="0" x="0" y="1158"/>    
+    </execution>    
+    <execution id="35">      
+      <position height="48" width="0" x="0" y="1323"/>    
+    </execution>  
+  </object>  
+  <object id="36" language="java" name="be.bomberman.main.gameobjects.GameObject" 
+    project="Bomberman-dgomezde-egrigori-zbeyens" 
+    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/gameobjects/GameObject.java" binary="false" 
+    label="gameObject" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="761" y="0"/>    
+    <execution id="27">      
+      <position height="177" width="0" x="0" y="698"/>    
+    </execution>    
+    <execution id="38">      
+      <position height="48" width="0" x="0" y="779"/>    
+    </execution>    
+    <execution id="33">      
+      <position height="333" width="0" x="0" y="1206"/>    
+    </execution>    
+    <execution id="40">      
+      <position height="189" width="0" x="0" y="1302"/>    
+    </execution>  
+  </object>  
+  <object id="43" language="java" name="be.bomberman.main.levels.tiles.Tile" 
+    project="Bomberman-dgomezde-egrigori-zbeyens" 
+    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/tiles/Tile.java" binary="false" label="tile" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="968" y="0"/>    
+    <execution id="44">      
+      <position height="453" width="0" x="0" y="1392"/>    
+    </execution>    
+    <execution id="46">      
+      <position height="309" width="0" x="0" y="1488"/>    
+    </execution>    
+    <execution id="42">      
+      <position height="48" width="320" x="847" y="1395"/>    
+    </execution>  
+  </object>  
+  <object id="49" language="java" name="be.bomberman.main.affichage.Screen" 
+    project="Bomberman-dgomezde-egrigori-zbeyens" 
+    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/affichage/Screen.java" binary="false" 
+    label="screen" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="1482" y="0"/>    
+    <execution id="48">      
+      <position height="192" width="0" x="0" y="1557"/>    
+    </execution>    
+    <execution id="51">      
+      <position height="48" width="0" x="0" y="1653"/>    
+    </execution>    
+    <execution id="31">      
+      <position height="192" width="0" x="0" y="2130"/>    
+    </execution>    
+    <execution id="53">      
+      <position height="48" width="0" x="0" y="2226"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="update():void">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="5">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="6"/>  
+  </message>  
+  <message id="8" operation="start():void" x="137" y="157">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="11" operation="render():void">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="13">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="15">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>  
+  <message id="18" operation="run():void">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="19"/>  
+  </message>  
+  <message id="21" operation="stop():void">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="24" operation="updateEntities():void">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="25"/>  
+  </message>  
+  <message id="26">    
+    <end type="SOURCE" refId="25"/>    
+    <end type="TARGET" refId="27"/>  
+  </message>  
+  <message id="28" operation="renderEntities(be.bomberman.main.affichage.Screen):void">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="29"/>  
+  </message>  
+  <message id="30">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="31"/>  
+  </message>  
+  <message id="32">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="33"/>  
+  </message>  
+  <message id="34" operation="renderTile(be.bomberman.main.affichage.Screen,int,int):void">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="35"/>  
+  </message>  
+  <message id="37" operation="update():void">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="38"/>  
+  </message>  
+  <message id="39" operation="render(be.bomberman.main.affichage.Screen):void">    
+    <end type="SOURCE" refId="33"/>    
+    <end type="TARGET" refId="40"/>  
+  </message>  
+  <message id="41">    
+    <end type="SOURCE" refId="40"/>    
+    <end type="TARGET" refId="42"/>  
+  </message>  
+  <message id="45" operation="render(int,int,be.bomberman.main.affichage.Screen):void">    
+    <end type="SOURCE" refId="44"/>    
+    <end type="TARGET" refId="46"/>  
+  </message>  
+  <message id="47">    
+    <end type="SOURCE" refId="46"/>    
+    <end type="TARGET" refId="48"/>  
+  </message>  
+  <message id="50" operation="renderTile(int,int,be.bomberman.main.levels.tiles.Tile):void">    
+    <end type="SOURCE" refId="48"/>    
+    <end type="TARGET" refId="51"/>  
+  </message>  
+  <message id="52">    
+    <end type="SOURCE" refId="31"/>    
+    <end type="TARGET" refId="53"/>  
+  </message>
+</sequence-diagram>
