@@ -155,35 +155,42 @@ public class Deflagration extends GameObject {
 
         // int[] defCoord = getCoordinates(this.x, this.y);
 
-        if ((getCoordinates(this.x, this.y)[0] == entCoord[0]) && (getCoordinates(this.x, this.y)[1] == entCoord[1])) {
+        if (isBurningAtCoordinates(this.x, this.y, entCoord)) {
             burning = true;
         } else {
             for (int i = 1; i <= range; i++) {
-                if (breakableLeft(i) && breakableLeft(i - 1) && breakableLeft(i - 2)) {
-                    if ((getCoordinates(this.x - (i << 5), this.y)[0] == entCoord[0]) && (getCoordinates(this.x - (i << 5), this.y)[1] == entCoord[1])) {
-                        burning = true;
-                    }
-                }
-                if (breakableRight(i) && breakableRight(i - 1) && breakableRight(i - 2)) {
-                    if ((getCoordinates(this.x + (i << 5), this.y)[0] == entCoord[0]) && (getCoordinates(this.x + (i << 5), this.y)[1] == entCoord[1])) {
-                        burning = true;
-                    }
-                }
-                if (breakableUp(i) && breakableUp(i - 1) && breakableUp(i - 2)) {
-                    if ((getCoordinates(this.x, this.y - (i << 5))[0] == entCoord[0]) && (getCoordinates(this.x, this.y - (i << 5))[1] == entCoord[1])) {
-                        burning = true;
-                    }
-                }
-                if (breakableDown(i) && breakableDown(i - 1) && breakableDown(i - 2)) {
-                    if ((getCoordinates(this.x, this.y + (i << 5))[0] == entCoord[0]) && (getCoordinates(this.x, this.y + (i << 5))[1] == entCoord[1])) {
-                        burning = true;
-                    }
+                if (checkBurningInDirection(0, i, entCoord) ||
+                        checkBurningInDirection(1, i, entCoord) ||
+                        checkBurningInDirection(2, i, entCoord) ||
+                        checkBurningInDirection(3, i, entCoord)) {
+                    burning = true;
+                    break;
                 }
             }
         }
 
 
         return burning;
+    }
+
+    private boolean isBurningAtCoordinates(int x, int y, int[] entCoord) {
+        return (getCoordinates(x, y)[0] == entCoord[0]) && (getCoordinates(x, y)[1] == entCoord[1]);
+    }
+
+    private boolean checkBurningInDirection(int direction, int i, int[] entCoord) {
+        int offset = i << 5;
+        switch (direction) {
+            case 0: // Влево
+                return breakableLeft(i) && breakableLeft(i - 1) && breakableLeft(i - 2) && isBurningAtCoordinates(this.x - offset, this.y, entCoord);
+            case 1: // Вправо
+                return breakableRight(i) && breakableRight(i - 1) && breakableRight(i - 2) && isBurningAtCoordinates(this.x + offset, this.y, entCoord);
+            case 2: // Вверх
+                return breakableUp(i) && breakableUp(i - 1) && breakableUp(i - 2) && isBurningAtCoordinates(this.x, this.y - offset, entCoord);
+            case 3: // Вниз
+                return breakableDown(i) && breakableDown(i - 1) && breakableDown(i - 2) && isBurningAtCoordinates(this.x, this.y + offset, entCoord);
+            default:
+                return false;
+        }
     }
 
     public boolean burnedByCollision(int xEntity, int yEntity) {

@@ -5,19 +5,74 @@ import affichage.Screen;
 import affichage.SheetSquare;
 import bomberman.Bomberman;
 import gameobjects.bonus.Bonus;
+import levels.tiles.AnimatedSolidTile;
 import levels.tiles.Tile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Level2 extends Level {
 
     BufferedImage image = null;
     protected int animation = 0;
+    private HashMap<Integer, Tile> tileMap;
+    private HashMap<Integer, AnimatedSolidTile> animatedSolidTileMap;
+    private final String[] bonusTypes = {
+            "firePower", "fetaBonus", "rangeBonus", "lifeBonus", "bombBonus"
+    };
 
     public Level2(String imagePath) {
         super(imagePath, "level2");
+        initializeTileMaps();
+    }
+
+    private void initializeTileMaps() {
+        tileMap = new HashMap<>();
+        animatedSolidTileMap = new HashMap<>();
+
+        tileMap.put(0xff527b9c, Tile.teleport);
+        tileMap.put(0xff950950, Tile.noteleport);
+        tileMap.put(0xff555555, Tile.rockLevel2);
+        tileMap.put(0xff969696, Tile.lightrockLevel2);
+        tileMap.put(0xff00FF00, Tile.grassLevel2);
+        tileMap.put(0xff999999, Tile.grassSolid);
+        tileMap.put(0xffff52ff, Tile.treeSO);
+        tileMap.put(0xffff62ff, Tile.treeO);
+        tileMap.put(0xffeec400, Tile.treeNO);
+        tileMap.put(0xffff82ff, Tile.treeN);
+        tileMap.put(0xffeec500, Tile.treeNE);
+        tileMap.put(0xff0000bd, Tile.treeSE);
+        tileMap.put(0xff0010bd, Tile.treeE);
+        tileMap.put(0xffeedc00, Tile.bordNO);
+        tileMap.put(0xffeec000, Tile.bordNOO);
+        tileMap.put(0xffeedc10, Tile.bordN);
+        tileMap.put(0xffeedc20, Tile.bordNE);
+        tileMap.put(0xffeec200, Tile.bordNEE);
+        tileMap.put(0xffeedc30, Tile.bordO);
+        tileMap.put(0xffeedc40, Tile.bordE);
+        tileMap.put(0xffeedc50, Tile.bordSO);
+        tileMap.put(0xffeec100, Tile.bordSOO);
+        tileMap.put(0xffeedc60, Tile.bordS);
+        tileMap.put(0xffeedc70, Tile.bordSE);
+        tileMap.put(0xffeec300, Tile.bordSEE);
+        tileMap.put(0xff00ffff, Tile.house1);
+        tileMap.put(0xff80ffff, Tile.house9);
+        tileMap.put(0xff90ffff, Tile.house10);
+
+        animatedSolidTileMap.put(0xff10ffff, new AnimatedSolidTile(Tile.house2, Tile.house2b, Tile.house2c, Tile.house2d));
+        animatedSolidTileMap.put(0xff20ffff, new AnimatedSolidTile(Tile.house3, Tile.house3b, Tile.house3c, Tile.house3d));
+        animatedSolidTileMap.put(0xff30ffff, new AnimatedSolidTile(Tile.house4, Tile.house4b, Tile.house4c, Tile.house4d));
+        animatedSolidTileMap.put(0xff40ffff, new AnimatedSolidTile(Tile.house5, Tile.house5b, Tile.house5c, Tile.house5d));
+        animatedSolidTileMap.put(0xff50ffff, new AnimatedSolidTile(Tile.house6, Tile.house6b, Tile.house6c, Tile.house6d));
+        animatedSolidTileMap.put(0xff60ffff, new AnimatedSolidTile(Tile.house7, Tile.house7b, Tile.house7c, Tile.house7d));
+        animatedSolidTileMap.put(0xff70ffff, new AnimatedSolidTile(Tile.house8, Tile.house8b, Tile.house8c, Tile.house8));
+        animatedSolidTileMap.put(0xff93ffff, new AnimatedSolidTile(Tile.house11, Tile.house11b, Tile.house11c, Tile.house11d));
+        animatedSolidTileMap.put(0xff96ffff, new AnimatedSolidTile(Tile.house12, Tile.house12b, Tile.house12c, Tile.house12d));
+        animatedSolidTileMap.put(0xff00eeee, new AnimatedSolidTile(Tile.house13, Tile.house13b, Tile.house13c, Tile.house13d));
+        animatedSolidTileMap.put(0xff30eeee, new AnimatedSolidTile(Tile.house14, Tile.house14b, Tile.house14c, Tile.house14d));
+        animatedSolidTileMap.put(0xff60eeee, new AnimatedSolidTile(Tile.house15, Tile.house15b, Tile.house15c, Tile.house15d));
     }
 
     protected void loadLevelFromFile(String imagePath) {
@@ -45,33 +100,30 @@ public class Level2 extends Level {
         updates++;
         if ((updates % 1200) == 0) {        //tous les 20 secondes
             if (!Bomberman.musicIsPaused) System.out.println("bonusSpawn");
-            int should = r.nextInt(13);
+            int bonusIndex = r.nextInt(5);
             updates = 0;
-            if (should == 0 || should == 2 || should == 7 || should == 13) {
-                Bonus firePowerBonus = new Bonus(this, bonusCoord(), "firePower");
-                //System.out.println( bonusCoord()[0] +" "+ bonusCoord()[1]);
-                bonusses.add(firePowerBonus);
-            }
-            if (should == 1 || should == 3 || should == 8) {
-                Bonus fetaBonus = new Bonus(this, bonusCoord(), "fetaBonus");
-                //System.out.println( bonusCoord()[0] +" "+ bonusCoord()[1]);
-                bonusses.add(fetaBonus);
-            }
-            if (should == 4 || should == 6 || should == 12) {
-                Bonus rangeBonus = new Bonus(this, bonusCoord(), "rangeBonus");
-                //System.out.println( bonusCoord()[0] +" "+ bonusCoord()[1]);
-                bonusses.add(rangeBonus);
-            }
-            if (should == 5) {
-                Bonus lifeBonus = new Bonus(this, bonusCoord(), "lifeBonus");
-                //System.out.println( bonusCoord()[0] +" "+ bonusCoord()[1]);
-                bonusses.add(lifeBonus);
-            }
-            if (should == 9 || should == 10 || should == 11) {
-                Bonus bombBonus = new Bonus(this, bonusCoord(), "bombBonus");
-                //System.out.println( bonusCoord()[0] +" "+ bonusCoord()[1]);
-                bonusses.add(bombBonus);
-            }
+
+            addBonus(bonusIndex);
+        }
+    }
+
+    private void addBonus(Integer bonusIndex) {
+        switch (bonusIndex) {
+            case 0:
+                bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[0]));
+                break;
+            case 1:
+                bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[1]));
+                break;
+            case 2:
+                bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[2]));
+                break;
+            case 3:
+                bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[3]));
+                break;
+            case 4:
+                bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[4]));
+                break;
         }
     }
 
@@ -90,118 +142,14 @@ public class Level2 extends Level {
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height) return Tile.seaLevel2; //sea
 
+        int tilesColour = tilesColours[x + y * width];
 
-        if (tilesColours[x + y * width] == 0xff527b9c) return Tile.teleport;
-        if (tilesColours[x + y * width] == 0xff950950) return Tile.noteleport;
+        if (tileMap.containsKey(tilesColour))
+            return tileMap.get(tilesColour);
+        else if (animatedSolidTileMap.containsKey(tilesColour))
+            return animatedSolidTileMap.get(tilesColour).getCurrentFrame(animation);
 
-
-        if (tilesColours[x + y * width] == 0xff555555) return Tile.rockLevel2;
-        if (tilesColours[x + y * width] == 0xff969696) return Tile.lightrockLevel2;
-        if (tilesColours[x + y * width] == 0xff00FF00) return Tile.grassLevel2; //0xff00FF00
-        if (tilesColours[x + y * width] == 0xff999999) return Tile.grassSolid; //quand on pose une bombe !
-
-        if (tilesColours[x + y * width] == 0xffff52ff) return Tile.treeSO;
-
-        if (tilesColours[x + y * width] == 0xffff62ff) return Tile.treeO;
-        if (tilesColours[x + y * width] == 0xffeec400) return Tile.treeNO;
-        if (tilesColours[x + y * width] == 0xffff82ff) return Tile.treeN;
-        if (tilesColours[x + y * width] == 0xffeec500) return Tile.treeNE;
-        if (tilesColours[x + y * width] == 0xff0000bd) return Tile.treeSE;
-        if (tilesColours[x + y * width] == 0xff0010bd) return Tile.treeE;
-
-        if (tilesColours[x + y * width] == 0xffeedc00) return Tile.bordNO;
-        if (tilesColours[x + y * width] == 0xffeec000) return Tile.bordNOO;
-        if (tilesColours[x + y * width] == 0xffeedc10) return Tile.bordN;
-        if (tilesColours[x + y * width] == 0xffeedc20) return Tile.bordNE;
-        if (tilesColours[x + y * width] == 0xffeec200) return Tile.bordNEE;
-        if (tilesColours[x + y * width] == 0xffeedc30) return Tile.bordO;
-        if (tilesColours[x + y * width] == 0xffeedc40) return Tile.bordE;
-        if (tilesColours[x + y * width] == 0xffeedc50) return Tile.bordSO;
-        if (tilesColours[x + y * width] == 0xffeec100) return Tile.bordSOO;
-        if (tilesColours[x + y * width] == 0xffeedc60) return Tile.bordS;
-        if (tilesColours[x + y * width] == 0xffeedc70) return Tile.bordSE;
-        if (tilesColours[x + y * width] == 0xffeec300) return Tile.bordSEE;
-
-        if (tilesColours[x + y * width] == 0xff00ffff) return Tile.house1;
-        if (tilesColours[x + y * width] == 0xff10ffff) {
-            if (animation % 40 < 10) return Tile.house2;
-            else if (animation % 40 < 20) return Tile.house2b;
-            else if (animation % 40 < 30) return Tile.house2c;
-            else return Tile.house2d;
-        }
-        if (tilesColours[x + y * width] == 0xff20ffff) {
-            if (animation % 40 < 10) return Tile.house3;
-            else if (animation % 40 < 20) return Tile.house3b;
-            else if (animation % 40 < 30) return Tile.house3c;
-            else return Tile.house3d;
-        }
-        if (tilesColours[x + y * width] == 0xff30ffff) {
-            if (animation % 40 < 10) return Tile.house4;
-            else if (animation % 40 < 20) return Tile.house4b;
-            else if (animation % 40 < 30) return Tile.house4c;
-            else return Tile.house4d;
-        }
-        if (tilesColours[x + y * width] == 0xff40ffff) {
-            if (animation % 40 < 10) return Tile.house5;
-            else if (animation % 40 < 20) return Tile.house5b;
-            else if (animation % 40 < 30) return Tile.house5c;
-            else return Tile.house5d;
-        }
-        if (tilesColours[x + y * width] == 0xff50ffff) {
-            if (animation % 40 < 10) return Tile.house6;
-            else if (animation % 40 < 20) return Tile.house6b;
-            else if (animation % 40 < 30) return Tile.house6c;
-            else return Tile.house6d;
-        }
-        if (tilesColours[x + y * width] == 0xff60ffff) {
-            if (animation % 40 < 10) return Tile.house7;
-            else if (animation % 40 < 20) return Tile.house7b;
-            else if (animation % 40 < 30) return Tile.house7c;
-            else return Tile.house7d;
-        }
-        if (tilesColours[x + y * width] == 0xff70ffff) {
-            if (animation % 40 < 10) return Tile.house8;
-            else if (animation % 40 < 20) return Tile.house8b;
-            else if (animation % 40 < 30) return Tile.house8c;
-            else return Tile.house8;
-        }
-        if (tilesColours[x + y * width] == 0xff80ffff) return Tile.house9;
-        if (tilesColours[x + y * width] == 0xff90ffff) return Tile.house10;
-        if (tilesColours[x + y * width] == 0xff93ffff) {
-            if (animation % 40 < 10) return Tile.house11;
-            else if (animation % 40 < 20) return Tile.house11b;
-            else if (animation % 40 < 30) return Tile.house11c;
-            else return Tile.house11d;
-        }
-        if (tilesColours[x + y * width] == 0xff96ffff) {
-            if (animation % 40 < 10) return Tile.house12;
-            else if (animation % 40 < 20) return Tile.house12b;
-            else if (animation % 40 < 30) return Tile.house12c;
-            else return Tile.house12d;
-        }
-        if (tilesColours[x + y * width] == 0xff00eeee) {
-            if (animation % 40 < 10) return Tile.house13;
-            else if (animation % 40 < 20) return Tile.house13b;
-            else if (animation % 40 < 30) return Tile.house13c;
-            else return Tile.house13d;
-        }
-        if (tilesColours[x + y * width] == 0xff30eeee) {
-            if (animation % 40 < 10) return Tile.house14;
-            else if (animation % 40 < 20) return Tile.house14b;
-            else if (animation % 40 < 30) return Tile.house14c;
-            else return Tile.house14d;
-        }
-        if (tilesColours[x + y * width] == 0xff60eeee) {
-            if (animation % 40 < 10) return Tile.house15;
-            else if (animation % 40 < 20) return Tile.house15b;
-            else if (animation % 40 < 30) return Tile.house15c;
-            else return Tile.house15d;
-        }
-
-        //if (tilesColours[x + y*width] == 0x00000000) return Tile.burningGrass;
 
         return Tile.grassLevel2;
     }
-
-
 }

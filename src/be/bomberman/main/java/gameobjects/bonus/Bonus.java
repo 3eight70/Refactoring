@@ -44,21 +44,31 @@ public class Bonus extends GameObject {
                 screen.renderTile(x, y, Tile.bonus);
                 SomeFont.renderW(this.bonusType, screen, x - 16, y - 8, 1);
             } else if (level.theLevel == "level2") {
-                if (this.getType() == "fetaBonus") {
-                    screen.renderEntity(x, y, SheetSquare.bonusspeed, 32, false, false, 0xff527B9C);
-                } else if (this.getType() == "rangeBonus") {
-                    screen.renderEntity(x, y, SheetSquare.bonusrange, 32, false, false, 0xff527B9C);
-                } else if (this.getType() == "firePower") {
-                    screen.renderEntity(x, y, SheetSquare.bonusspike, 32, false, false, 0xff527B9C);
-                } else if (this.getType() == "lifeBonus") {
-                    screen.renderEntity(x, y, SheetSquare.bonuslife, 32, false, false, 0xff527B9C); //a modif
-                } else if (this.getType() == "bombBonus") {
-                    screen.renderEntity(x, y, SheetSquare.bonusbomb, 32, false, false, 0xff527B9C); //a modif
-                }
+                renderBonus(screen);
             }
         }
     }
 
+    private void renderBonus(Screen screen) {
+        int color = 0xff527B9C;
+        switch (this.getType()) {
+            case "fetaBonus":
+                screen.renderEntity(x, y, SheetSquare.bonusspeed, 32, false, false, color);
+                break;
+            case "rangeBonus":
+                screen.renderEntity(x, y, SheetSquare.bonusrange, 32, false, false, color);
+                break;
+            case "firePower":
+                screen.renderEntity(x, y, SheetSquare.bonusspike, 32, false, false, color);
+                break;
+            case "lifeBonus":
+                screen.renderEntity(x, y, SheetSquare.bonuslife, 32, false, false, color);
+                break;
+            case "bombBonus":
+                screen.renderEntity(x, y, SheetSquare.bonusbomb, 32, false, false, color);
+                break;
+        }
+    }
 
     @Override
     public void remove() {

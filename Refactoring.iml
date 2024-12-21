@@ -7,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/be/bomberman/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/be/bomberman/main/resources" type="java-resource" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="17" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
