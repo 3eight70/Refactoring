@@ -4,6 +4,9 @@ package levels;
 import affichage.Screen;
 import affichage.SheetSquare;
 import bomberman.Bomberman;
+import bomberman.pause.GameOffStateGame;
+import bomberman.pause.GameOnStateGame;
+import bomberman.pause.MusicOnStateGame;
 import gameobjects.bonus.Bonus;
 import levels.tiles.Tile;
 
@@ -75,13 +78,14 @@ public class Level2 extends Level {
         }
     }
 
-    public void renderEntities(Screen screen, int pausestate) {
-        super.renderEntities(screen, pausestate);
+    public void renderEntities(Screen screen, Bomberman bomberman) {
+        super.renderEntities(screen, bomberman);
         //en fonction du nombre de joueur !!!
-        if (pausestate == 1) screen.renderRectangle(0, 0, SheetSquare.afficheon, 128, 544, false, false, 0xff527B9C);
-        else if (pausestate == 2)
+        if (bomberman.getGamePauseState() instanceof GameOnStateGame)
+            screen.renderRectangle(0, 0, SheetSquare.afficheon, 128, 544, false, false, 0xff527B9C);
+        else if (bomberman.getGamePauseState() instanceof GameOffStateGame)
             screen.renderRectangle(0, 0, SheetSquare.afficheoff, 128, 544, false, false, 0xff527B9C);
-        else if (pausestate == 3)
+        else if (bomberman.getMusicPauseState() instanceof MusicOnStateGame)
             screen.renderRectangle(0, 0, SheetSquare.affichepauseon, 128, 544, false, false, 0xff527B9C);
         else screen.renderRectangle(0, 0, SheetSquare.affichepauseoff, 128, 544, false, false, 0xff527B9C);
     }
