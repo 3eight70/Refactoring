@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
-encoding//src/be/bomberman/main/Bomberman.java=UTF-8
+encoding//src/be/bomberman/main/bomberman.Bomberman.java=UTF-8
 encoding//src/be/bomberman/main/affichage/SheetSquare.java=UTF-8
 encoding//src/be/bomberman/main/affichage/SpriteSheet.java=UTF-8
 encoding//src/be/bomberman/main/affichage/WorldPanelOnline.java=UTF-8

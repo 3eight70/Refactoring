@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence-diagram version="1.1.8" icons="true">  
-  <object id="1" language="java" name="be.bomberman.main.Bomberman" project="Bomberman-dgomezde-egrigori-zbeyens" 
-    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/Bomberman.java" binary="false" label="bomberman" 
+  <object id="1" language="java" name="be.bomberman.main.bomberman.Bomberman" project="bomberman.Bomberman-dgomezde-egrigori-zbeyens"
+    file="/bomberman.Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/bomberman.Bomberman.java" binary="false" label="bomberman"
     type="class" autoSize="true">    
     <position height="-1" width="-1" x="169" y="0"/>    
     <execution id="2">      
@@ -35,8 +35,8 @@
       <position height="48" width="0" x="0" y="2599"/>    
     </execution>  
   </object>  
-  <object id="23" language="java" name="be.bomberman.main.levels.Level" project="Bomberman-dgomezde-egrigori-zbeyens" 
-    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/Level.java" binary="false" label="level" 
+  <object id="23" language="java" name="be.bomberman.main.levels.Level" project="bomberman.Bomberman-dgomezde-egrigori-zbeyens"
+    file="/bomberman.Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/Level.java" binary="false" label="level"
     type="class" autoSize="true">    
     <position height="-1" width="-1" x="514" y="0"/>    
     <execution id="6">      
@@ -59,8 +59,8 @@
     </execution>  
   </object>  
   <object id="36" language="java" name="be.bomberman.main.gameobjects.GameObject" 
-    project="Bomberman-dgomezde-egrigori-zbeyens" 
-    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/gameobjects/GameObject.java" binary="false" 
+    project="bomberman.Bomberman-dgomezde-egrigori-zbeyens"
+    file="/bomberman.Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/gameobjects/GameObject.java" binary="false"
     label="gameObject" type="class" autoSize="true">    
     <position height="-1" width="-1" x="761" y="0"/>    
     <execution id="27">      
@@ -77,8 +77,8 @@
     </execution>  
   </object>  
   <object id="43" language="java" name="be.bomberman.main.levels.tiles.Tile" 
-    project="Bomberman-dgomezde-egrigori-zbeyens" 
-    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/tiles/Tile.java" binary="false" label="tile" 
+    project="bomberman.Bomberman-dgomezde-egrigori-zbeyens"
+    file="/bomberman.Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/levels/tiles/Tile.java" binary="false" label="tile"
     type="class" autoSize="true">    
     <position height="-1" width="-1" x="968" y="0"/>    
     <execution id="44">      
@@ -92,8 +92,8 @@
     </execution>  
   </object>  
   <object id="49" language="java" name="be.bomberman.main.affichage.Screen" 
-    project="Bomberman-dgomezde-egrigori-zbeyens" 
-    file="/Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/affichage/Screen.java" binary="false" 
+    project="bomberman.Bomberman-dgomezde-egrigori-zbeyens"
+    file="/bomberman.Bomberman-dgomezde-egrigori-zbeyens/src/be/bomberman/main/affichage/Screen.java" binary="false"
     label="screen" type="class" autoSize="true">    
     <position height="-1" width="-1" x="1482" y="0"/>    
     <execution id="48">      

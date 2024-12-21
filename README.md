@@ -1,2 +1,2 @@
 # bomberman-java
-Bomberman game using POO (Java)
+bomberman.Bomberman game using POO (Java)
