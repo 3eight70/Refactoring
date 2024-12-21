@@ -31,14 +31,14 @@ import java.io.IOException;
 
 public class WorldPanel {
 
-    private final JFrame worldFrame = new JFrame("Choose a World");
-    private final Dimension size;
-    private final JPanel panel = new JPanel();
-    private final JButton button1;
-    private final JButton button2;
-    private final int width;
-    private final int height;
-    private final int scale;
+    protected JFrame worldFrame = new JFrame("Choose a World");
+    protected Dimension size;
+    protected JPanel panel = new JPanel();
+    protected JButton button1;
+    protected JButton button2;
+    protected int width;
+    protected int height;
+    protected int scale;
 
 
     public WorldPanel(int WIDTH, int HEIGHT, int SCALE) {

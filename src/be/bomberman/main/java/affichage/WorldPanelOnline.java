@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -31,19 +30,12 @@ import java.awt.image.DataBufferInt;
 import java.io.IOException;
 
 
-public class WorldPanelOnline {
+public class WorldPanelOnline extends WorldPanel {
 
-    private final JFrame worldFrame = new JFrame("Choose a World");
-    private final Dimension size;
-    private final JPanel panel = new JPanel();
-    private final JButton button1;
-    private final JButton button2;
-    private final int width;
-    private final int height;
-    private final int scale;
     private final String protocol;
 
     public WorldPanelOnline(int WIDTH, int HEIGHT, int SCALE, String protocol) {
+        super(WIDTH, HEIGHT, SCALE);
         this.width = WIDTH;
         this.height = HEIGHT;
         this.scale = SCALE;
