@@ -111,40 +111,6 @@ public class Deflagration extends GameObject {
         }
 
     }
-	
-	/*
-	public void setTileBurning(boolean bool){
-		for (int i = 1; i <= range; i++){
-			if (breakableLeft(i) && breakableLeft(i-1)) { // la bombe est toujours sur un breakable				
-				(level.getTile((x >> 5) - i, y >> 5)).setBurning(bool);
-			}
-			if (breakableRight(i) && breakableRight(i-1)){
-				level.getTile((x >> 5) + i, y >> 5).setBurning(bool);
-			}
-			if (breakableDown(i) && breakableDown(i-1)){
-				level.getTile(x >> 5 , (y >> 5) + i).setBurning(bool);
-				
-			}
-			if (breakableUp(i)&& breakableUp(i-1)){
-				level.getTile(x >> 5 , (y >> 5) - i).setBurning(bool);
-				
-			}
-		}
-		
-	}
-	// level.getTile => burning tile modifi� tilesColours momentanement
-	
-	*/
-	
-	/*
-	public boolean burningEntity(int x, int y){
-		
-		for(int i = 1; i < range; i++){
-			if ( (x >> 5) <= (this.x >> 5) + i && (x >> 5) >= (this.x >> 5)){}
-		}
-		return false;
-	}
-	*/
 
     public boolean entityBurning(int x, int y) {
         // x y position du player en pixel
@@ -211,41 +177,6 @@ public class Deflagration extends GameObject {
 
         return false;
     }
-	
-	
-	/*
-	public boolean entityBurning(int x, int y){
-		// x y position du player en pixel
-		int[] mobCoord = level.getTile(x >> 5, y >> 5);
-		System.out.println(x+" "+y);
-		System.out.println(this.x+" "+this.y);
-		boolean burning = false;
-		if (level.getTile((this.x >> 5), this.y >> 5) == tileEntity){
-			//burning = true;			
-		}else{
-			for (int i=0; i < range; i++){			
-				if (level.getTileCoord((this.x >> 5) - i, this.y >> 5) == tileEntity){
-					//burning = true;
-				}
-				if (level.getTile((this.x >> 5) + i, this.y >> 5) == tileEntity){
-					burning = true;
-				}
-				if (level.getTile(this.x >> 5, (this.y >> 5) - i) == tileEntity){
-					//burning = true;
-				}
-				if (level.getTile(this.x >> 5, (this.y >> 5) + i) == tileEntity){
-					//burning = true;
-				}
-			}			
-		}
-		
-		
-		
-		return burning;
-		
-	}
-	*/
-
 
     private boolean breakableLeft(int i) {
         if (i < 0) i = 0;

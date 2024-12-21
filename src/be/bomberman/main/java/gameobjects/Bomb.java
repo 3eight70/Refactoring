@@ -18,7 +18,6 @@ public abstract class Bomb extends GameObject {
         this.player = player;
         this.timer = 0;
         this.range = range;
-        //placeInFront(player);
         center();
     }
 
@@ -55,18 +54,4 @@ public abstract class Bomb extends GameObject {
         if (bombCollision(xEntity + xMin, yEntity + yMax)) return true;
         return bombCollision(xEntity + xMax, yEntity + yMin);
     }
-	
-	/*
-	public void placeInFront(Player player){
-		int dir = player.getMovingDir() ;
-		// nord sud ouest est
-		if (dir == 0){this.y = this.y - 8;}
-		if (dir == 1){this.y = this.y + 16;}
-		if (dir == 2){this.x = this.x - 8;}
-		if (dir == 3){this.x = this.x + 16;}
-	}
-	
-	*/
-
-
 }

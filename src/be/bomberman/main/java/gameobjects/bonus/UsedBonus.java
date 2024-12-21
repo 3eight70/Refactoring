@@ -19,20 +19,4 @@ public abstract class UsedBonus extends GameObject {
     public abstract void doUsedBonusAction(Player player);
 
     public abstract void doUsedBonusActionOnCollision(Player player);
-	
-	/*
-	public abstract void appear(int x, int y);
-	public abstract void dissapear(int x, int y);
-	
-	//public abstract void setCoordinates(int x, int y);
-	
-	public int getX(){
-		return this.x;
-	}
-	
-	public int getY(){
-		return this.y;
-	}
-	
-	*/
 }

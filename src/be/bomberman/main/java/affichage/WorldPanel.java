@@ -91,7 +91,6 @@ public class WorldPanel {
     private class ListenForButton implements ActionListener {
 
         private Bomberman bomberman;
-        private PausePanel pausePanel;
 
         public void actionPerformed(ActionEvent e) {
 
