@@ -17,16 +17,13 @@ public class PlayerBomberman extends Player {
         this.bomberman = bomberman;
     }
 
-
     public void update() {
-
         super.update();
+
         int xa = 0, ya = 0;
         String onPlaceBombe = "n";
 
-
         if (life > 0) {
-
             if (!bomberman.jouerEnLigne) {
                 if (input.up) {
                     ya--;
@@ -46,6 +43,7 @@ public class PlayerBomberman extends Player {
                     Level.bombs.add(bomb);
                     bombRate = BasicBomb.bombRate;
                 }
+
                 if (carryBonus && input.B) {
                     if (bonusCarried == "firePower") {
                         if (useRate == 0 && bonusTimer > 0) {
@@ -69,9 +67,7 @@ public class PlayerBomberman extends Player {
                 if (carryBonus && bonusCarried == "rangeBonus") {
                     useRangeBonus();
                 }
-
             } else {
-                //si on est le joueur controle par clavier
                 if (name.equals(bomberman.playerName)) {
                     //ajout des variables
                     if (input.up) {
@@ -103,7 +99,6 @@ public class PlayerBomberman extends Player {
                         bomberman.socketClientTCP.sendData(bomberman.playerName + "-" + bomberman.player1.x + "_" + bomberman.player1.y + "_" + onPlaceBombe);
                     }
                 } else {
-                    //sinon, on se demande si on est a re��u de l'update de message
                     if (bomberman.msg.trim().split("-")[0].equals("bomberman.Bomberman")) {
                         int nouvellePosX = Integer.valueOf(bomberman.msg.trim().split("-")[1].trim().split("_")[0]);
                         int nouvellePosY = Integer.valueOf(bomberman.msg.trim().split("-")[1].trim().split("_")[1]);
@@ -124,11 +119,9 @@ public class PlayerBomberman extends Player {
 
                         }
                     }
-
                 }
             }
         }
-
 
         if (xa != 0 || ya != 0) {
             move(xa, ya);
@@ -136,8 +129,6 @@ public class PlayerBomberman extends Player {
         } else {
             isMoving = false;
         }
-
-
     }
 
 
@@ -230,8 +221,5 @@ public class PlayerBomberman extends Player {
                 screen.renderEntity(xT - 16, yT - 16, SheetSquare.tp8, 64, false, false, 0xff527B9C);
         }
     }
-
-
 }
-
 

@@ -67,46 +67,11 @@ public class KeyboardInput implements KeyListener {
         }
 
         if (key == KeyEvent.VK_BACK_SPACE) {
-            if (bomberman.pausestate == 1) { //on
-                bomberman.pausestate = 2;    //off
-            } else if (bomberman.pausestate == 3) { //pauseon
-                bomberman.pausestate = 4;        //pauseoff
-            } else if (bomberman.pausestate == 2) { //off
-                bomberman.pausestate = 1;    //on
-            } else if (bomberman.pausestate == 4) { //pauseoff
-                bomberman.pausestate = 3;        //pauseon
-            }
-
-            bomberman.timePressedPauseMusic++;
-            if (bomberman.timePressedPauseMusic % 2 == 1) {
-                Bomberman.musicIsPaused = true;
-                System.out.println(" music paused");
-            }
-            if (bomberman.timePressedPauseMusic % 2 == 0) {
-                Bomberman.musicIsPaused = false;
-                System.out.println("music playing");
-            }
+            bomberman.togglePause();
         }
 
         if (key == KeyEvent.VK_ENTER) {
-            if (bomberman.pausestate == 1) {
-                bomberman.pausestate = 3;
-            } else if (bomberman.pausestate == 2) {
-                bomberman.pausestate = 4;
-            } else if (bomberman.pausestate == 3) {
-                bomberman.pausestate = 1;
-            } else if (bomberman.pausestate == 4) {
-                bomberman.pausestate = 2;
-            }
-            bomberman.timePressedPauseGame++;
-            if (bomberman.timePressedPauseGame % 2 == 1) {
-                bomberman.isPaused = true;
-                System.out.println("paused");
-            }
-            if (bomberman.timePressedPauseGame % 2 == 0) {
-                bomberman.isPaused = false;
-                System.out.println("play");
-            }
+            bomberman.togglePause();
         }
     }
 
@@ -119,6 +84,4 @@ public class KeyboardInput implements KeyListener {
 
     public void keyTyped(KeyEvent e) {
     }
-
-
 }

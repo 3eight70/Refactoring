@@ -5,6 +5,10 @@ import affichage.Screen;
 import affichage.StartPanel;
 import affichage.font.SomeFont;
 import affichage.font.SomeFont2;
+import bomberman.pause.GameOnStateGame;
+import bomberman.pause.GamePauseState;
+import bomberman.pause.MusicOnStateGame;
+import bomberman.pause.MusicPauseState;
 import gameobjects.Ghost;
 import gameobjects.Mob;
 import gameobjects.Player;
@@ -39,11 +43,11 @@ public class Bomberman extends Canvas implements Runnable {
      */
 
     public int timer = 0;
-    public int pausestate = 1;
+    private GamePauseState gamePauseState = new GameOnStateGame();
+    private MusicPauseState musicPauseState = new MusicOnStateGame();
     public int timePressedPauseGame = 0, timePressedPauseMusic = 0;
     public boolean runningMusic = false;
     public boolean running = false;
-    public boolean isPaused = false;
     public static boolean musicIsPaused = false;
 
     /*
@@ -218,12 +222,12 @@ public class Bomberman extends Canvas implements Runnable {
 
     public void update() {
         mouse.update();
-        if (!isPaused) {
+        if (gamePauseState instanceof GameOnStateGame) {
             timer++;
             keys.update();
             level.updateEntities();
         }
-        if (!musicIsPaused) {
+        if (musicPauseState instanceof MusicOnStateGame) {
             if (!runningMusic) {
                 //Sound.backgroundMusic.loop();
                 runningMusic = true;
@@ -251,10 +255,10 @@ public class Bomberman extends Canvas implements Runnable {
             int xOffset = ghost.x - screen.getWidth() / 2;
             int yOffset = ghost.y - screen.getHeight() / 2;
             level.renderTile(screen, xOffset, yOffset);
-            level.renderEntities(screen, pausestate);
+            level.renderEntities(screen, this);
         } else if (level.theLevel == "level2") {
             level.renderTile(screen, 0, 0);
-            level.renderEntities(screen, pausestate);
+            level.renderEntities(screen, this);
 
 
             if (player1.getLife() == 5) SomeFont2.renderW("" + player1.getLife(), screen, 98, 21, 1);
@@ -379,4 +383,32 @@ public class Bomberman extends Canvas implements Runnable {
     // implementer les bonus dans le monde deux
 
 
+    public GamePauseState getGamePauseState() {
+        return gamePauseState;
+    }
+
+    public void setGamePauseState(GamePauseState pauseState) {
+        this.gamePauseState = pauseState;
+    }
+
+    public MusicPauseState getMusicPauseState() {
+        return musicPauseState;
+    }
+
+    public void setMusicPauseState(MusicPauseState musicPauseState) {
+        this.musicPauseState = musicPauseState;
+    }
+
+    public void toggleGamePause() {
+        gamePauseState.toggleGamePause(this);
+    }
+
+    public void toggleMusicPause() {
+        musicPauseState.toggleMusicPause(this);
+    }
+
+    public void togglePause() {
+        gamePauseState.toggleGamePause(this);
+        musicPauseState.toggleMusicPause(this);
+    }
 }

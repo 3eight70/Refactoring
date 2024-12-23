@@ -2,6 +2,7 @@ package levels;
 
 
 import affichage.Screen;
+import bomberman.Bomberman;
 import gameobjects.Bomb;
 import gameobjects.Deflagration;
 import gameobjects.Mob;
@@ -127,8 +128,7 @@ public class Level {
         }
     }
 
-
-    public void renderEntities(Screen screen, int pausestate) {
+    public void renderEntities(Screen screen, Bomberman bomberman) {
 
         for (UsedBonus usedBonus : usedBonusses) {
             usedBonus.render(screen);
@@ -145,10 +145,7 @@ public class Level {
         for (Deflagration deflagration : deflagrations) {
             deflagration.render(screen);
         }
-
-
     }
-
 
     public void renderTile(Screen screen, int xOffset, int yOffset) {
         /*

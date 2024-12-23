@@ -48,7 +48,7 @@ public class PausePanel extends JPanel {
             if (e.getSource() == pauseGameButton) {
                 timePressedPauseGame++;
                 if (timePressedPauseGame % 2 == 1) {
-                    bomberman.isPaused = true;
+                    bomberman.toggleGamePause();
                 }
             }
             if (e.getSource() == pauseSoundButton) {
