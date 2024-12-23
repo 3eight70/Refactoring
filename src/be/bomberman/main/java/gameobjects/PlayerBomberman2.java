@@ -84,7 +84,6 @@ public class PlayerBomberman2 extends Player {
                     }
                     if (input.space && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb == true) {
                         useBomb();
-                        System.out.println(level.theLevel);
                         Bomb bomb = new BasicBomb(x, y, level, this);
                         Level.bombs.add(bomb);
                         bombRate = BasicBomb.bombRate;
@@ -122,22 +121,20 @@ public class PlayerBomberman2 extends Player {
                     }
                 }
             }
-
         }
+
         if (xa != 0 || ya != 0) {
             move(xa, ya);
             isMoving = true;
         } else {
             isMoving = false;
         }
-
     }
 
 
     public void render(Screen screen) {
         boolean xMirror = false;
         boolean yMirror = false;
-
 
         if (life > 0) {
             if (movingDir == 0) {
@@ -181,7 +178,6 @@ public class PlayerBomberman2 extends Player {
                 }
                 xMirror = true;
             }
-
             if (immunisation < 300) {
                 if (immunisation % 60 < 10) square = SheetSquare.immu;
             }

@@ -98,6 +98,7 @@ public class Level2 extends Level {
         if (tilesColours[x + y * width] == 0xff527b9c) return Tile.teleport;
         if (tilesColours[x + y * width] == 0xff950950) return Tile.noteleport;
 
+<<<<<<< Updated upstream
 
         if (tilesColours[x + y * width] == 0xff555555) return Tile.rockLevel2;
         if (tilesColours[x + y * width] == 0xff969696) return Tile.lightrockLevel2;
@@ -204,6 +205,8 @@ public class Level2 extends Level {
 
         //if (tilesColours[x + y*width] == 0x00000000) return Tile.burningGrass;
 
+=======
+>>>>>>> Stashed changes
         return Tile.grassLevel2;
     }
 
