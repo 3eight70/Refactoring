@@ -21,6 +21,8 @@ target/
 
 /classes
 
+classes
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
