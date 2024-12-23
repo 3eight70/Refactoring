@@ -93,11 +93,9 @@ public class WorldPanel {
         private Bomberman bomberman;
 
         public void actionPerformed(ActionEvent e) {
-
             if (e.getSource() == button1) {
                 worldFrame.dispose();
                 bomberman = new Bomberman("level1", width, height);
-                //bomberman.frame.add(bomberman.panel);
                 Dimension size = new Dimension(width * scale, height * scale);
                 bomberman.frame.setMinimumSize(size);
                 bomberman.frame.setMaximumSize(size);
@@ -134,13 +132,6 @@ public class WorldPanel {
             if (e.getSource() == button2) {
                 worldFrame.dispose();
                 bomberman = new Bomberman("level2", width + 128, height);
-                //pausePanel = new PausePanel(200,200,scale,bomberman);
-				
-				/*
-				bomberman.panel.add(bomberman);
-				bomberman.frame.add(bomberman.panel,BorderLayout.CENTER);
-				bomberman.frame.add(pausePanel, BorderLayout.WEST);
-				*/
                 Dimension size = new Dimension((width + 128) * scale, height * scale);
                 bomberman.frame.setMinimumSize(size);
                 bomberman.frame.setMaximumSize(size);

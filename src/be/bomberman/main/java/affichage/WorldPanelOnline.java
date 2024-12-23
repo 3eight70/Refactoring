@@ -87,17 +87,15 @@ public class WorldPanelOnline extends WorldPanel {
 
         private Bomberman bomberman;
 
-        //si on choisi le monde 1
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == button1) {
                 worldFrame.dispose();
-
                 bomberman = new Bomberman("level1", width, height);
-
                 Dimension size = new Dimension(width * scale, height * scale);
                 bomberman.frame.setMinimumSize(size);
                 bomberman.frame.setMaximumSize(size);
                 bomberman.frame.setPreferredSize(size);
+
 
                 bomberman.frame.setFocusable(true);
                 //bomberman.frame.setResizable(false);
@@ -110,7 +108,7 @@ public class WorldPanelOnline extends WorldPanel {
                 bomberman.frame.setLocationRelativeTo(null);
                 bomberman.frame.setVisible(true);
 
-                //declarations
+
                 bomberman.keys = new KeyboardInput(bomberman);
                 bomberman.image = new BufferedImage(Bomberman.WIDTH, Bomberman.HEIGHT, BufferedImage.TYPE_INT_RGB);
                 bomberman.pixels = ((DataBufferInt) bomberman.image.getRaster().getDataBuffer()).getData();
