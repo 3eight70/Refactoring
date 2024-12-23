@@ -7,6 +7,7 @@ import gameobjects.bonus.BombBonus;
 import gameobjects.bonus.FetaBonus;
 import gameobjects.bonus.FirePower;
 import gameobjects.bonus.LifeBonus;
+import gameobjects.bonus.MusicLogger;
 import gameobjects.bonus.RangeBonus;
 import gameobjects.bonus.UsedBonus;
 import inputs.KeyboardInput;
@@ -17,7 +18,7 @@ import java.util.Arrays;
 
 public class Player extends Mob {
 
-    private static Integer DEFAULT_TIMER = 211;
+    private static final Integer DEFAULT_TIMER = 211;
     protected String name;
     protected KeyboardInput input;
     protected boolean isDead = false;
@@ -54,9 +55,9 @@ public class Player extends Mob {
         life = 3;
         bombposed = 0;
         maxbomb = 1;
-        if (level.theLevel == "level1") {
+        if (level.getLevel().equals("level1")) {
             range = 2;
-        } else if (level.theLevel == "level2") {
+        } else if (level.getLevel().equals("level2")) {
             range = 1;
         }
 
@@ -64,6 +65,7 @@ public class Player extends Mob {
         this.position[1] = y;
         this.bomberman = bomberman;
 
+        entityManager.addObserver(new MusicLogger());
         Arrays.fill(bombposedTimers, DEFAULT_TIMER);
     }
 
@@ -144,7 +146,7 @@ public class Player extends Mob {
         int xMax = 0; //a modif ?
         int yMin = 0; //21 pixels de la tete aux pieds
         int yMax = 0; //1 pixels }
-        if (level.theLevel == "level1") {
+        if (level.getLevel() == "level1") {
             xMin = 3;
             xMax = 28;
             yMin = 10;
@@ -183,7 +185,7 @@ public class Player extends Mob {
         int xMax = 0; //a modif ?
         int yMin = 0; //21 pixels de la tete aux pieds
         int yMax = 0; //1 pixels }
-        if (level.theLevel == "level1") {
+        if (level.getLevel() == "level1") {
             xMin = 3;
             xMax = 28;
             yMin = 10;
@@ -208,16 +210,6 @@ public class Player extends Mob {
             if (isTeleportTile(xa, ya, xMax, y)) return true;
         }
 
-        return false;
-    }
-
-
-    public boolean haveBomb() {
-        for (int i = 0; i < Level.bombs.size(); i++) {
-            if (Level.bombs.get(i).getYourBomb(x, y)) {
-                return true;
-            }
-        }
         return false;
     }
 
@@ -249,32 +241,22 @@ public class Player extends Mob {
         return false;
     }
 
-    public void bonusCollisionDetection() {
-        for (int i = 0; i < Level.usedBonusses.size(); i++) {
-            int x = Level.usedBonusses.get(i).x;
-            int y = Level.usedBonusses.get(i).y;
-            if (touchUsedBonus(x, y)) {
-                Level.usedBonusses.get(i).doUsedBonusActionOnCollision(this);
-            }
-        }
-    }
-
-
     @Override
     public void update() {
         if (bombRate > 0) bombRate--;
         if (useRate > 0) useRate--;
         if (bonusTimer > 0) bonusTimer--;
         if (beforeBonusCollisionDetection > 0) beforeBonusCollisionDetection--;
-        dieByDef();
-        takeBonus();
-        haveBomb();
+        entityManager.dieByDef(this);
+        entityManager.takeBonus(this);
+        entityManager.hasBombAt(x, y);
 
 
         if (teleportTimer < 300) Tile.tileTimer = 0;
         // Tile.
 
-        if (beforeBonusCollisionDetection == 0) bonusCollisionDetection();
+        if (beforeBonusCollisionDetection == 0) entityManager.checkBonusCollisions(this);
+        ;
 
         if (animation < 999999) animation++; // augmente de 60 toute les secondes
         else animation = 0;
@@ -286,45 +268,14 @@ public class Player extends Mob {
         bombposedTimers[1]++;
         bombposedTimers[2]++;
         bombposedTimers[3]++;
-        for (int i = 0; i < bombposedTimers.length; i++) {
-            if (bombposedTimers[i] == 210) {
+        for (Integer bombposedTimer : bombposedTimers) {
+            if (bombposedTimer == 210) {
                 bombposed--;
                 break;
             }
         }
         isMaxBomb();
     }
-
-
-    public void dieByDef() {
-        /*
-         * Quand le joueur se fait toucher par une deflagration immunisation passe a 0 et il perd une vie
-         * Si il se refait toucher dans les 5 secondes sont immunisation ne passe pas a 0 et il ne perd pas
-         * de vie
-         *
-         */
-        for (int i = 0; i < Level.deflagrations.size(); i++) {
-            if (Level.deflagrations.get(i).burnedByCollision(x, y)) {
-                notifies++;
-                if (life < 1) isDead = true;
-                notifyUser(); // attention appel� 60 x par seconde
-                if (immunisation > 300) immunisation = 0;
-                if (immunisation == 0) {
-                    if (life > 0) life--;
-                    if (life > 0) {
-                        if (name == "Link" && !Bomberman.musicIsPaused)
-                            if (!Bomberman.musicIsPaused && name != "Link") System.out.println("ouch");
-                    }
-                    if (life == 0) {
-                        if (name == "Link" && (!Bomberman.musicIsPaused))
-                            if (!Bomberman.musicIsPaused && name != "Link") System.out.println("lastlife");
-                    }
-                    break;
-                }
-            }
-        }
-    }
-
 
     public void dieByBonus() {
         if (immunisation > 300) immunisation = 0;
@@ -334,51 +285,8 @@ public class Player extends Mob {
         }
         notifies++;
         if (life < 1) isDead = true;
-        notifyUser(); // attention appel� 60 x par seconde
+        notifyUser();
     }
-
-
-    public void takeBonus() {
-        for (int i = 0; i < Level.bonusses.size(); i++) {
-            if (Level.bonusses.get(i).getYourBonus(x, y)) {
-                this.carryBonus = true;
-                Level.bonusses.get(i).setRemoved(true);
-                System.out.println(name);
-                if (Level.bonusses.get(i).getType() == "firePower") {
-                    if (!Bomberman.musicIsPaused) System.out.println("getitem");
-                    bonusCarried = "firePower";
-                    bonusTimer = 900;
-                    System.out.println("got FirePower");
-                }
-                if (Level.bonusses.get(i).getType() == "fetaBonus") {
-                    if (!Bomberman.musicIsPaused) System.out.println("getitem");
-                    bonusCarried = "fetaBonus";
-                    //bonusTimer = 900;
-                    System.out.println("got Feta");
-                }
-                if (Level.bonusses.get(i).getType() == "rangeBonus") {
-                    if (!Bomberman.musicIsPaused) System.out.println("getitem");
-                    bonusCarried = "rangeBonus";
-                    //bonusTimer = 900;
-                    System.out.println("got rangeBonus");
-                }
-                if (Level.bonusses.get(i).getType() == "lifeBonus") {
-                    if (!Bomberman.musicIsPaused) {
-                        if (name == "Link") System.out.println("linkBonus");
-                        else System.out.println("bonusLife");
-                    }
-                    bonusCarried = "lifeBonus";
-                    //bonusTimer = 900;
-                }
-                if (Level.bonusses.get(i).getType() == "bombBonus") {
-                    if (!Bomberman.musicIsPaused) System.out.println("getitem");
-                    bonusCarried = "bombBonus";
-                    //bonusTimer = 900;
-                }
-            }
-        }
-    }
-
 
     public void notifyUser() {
         if (isDead) {
@@ -402,11 +310,11 @@ public class Player extends Mob {
     }
 
     protected void useFireBonus() {
-        Level.usedBonusses.add(new FirePower(level, this.x + 16, this.y + 16)); // pass bonus carried sino rajoute le meme
+        entityManager.addUsedBonus(new FirePower(level, this.x + 16, this.y + 16));
         this.useRate = FirePower.useRate;
         this.beforeBonusCollisionDetection = 120;
         carryBonus = false;
-        if (level.theLevel == "level2") {
+        if (level.getLevel() == "level2") {
             if (!Bomberman.musicIsPaused) System.out.println("firePower");
             bonusCarried = "";
         }
@@ -415,15 +323,15 @@ public class Player extends Mob {
 
     protected void useFetaBonus() {
         UsedBonus fetaBonus = new FetaBonus(level, this.x + 16, this.y + 16);
-        Level.usedBonusses.add(fetaBonus);
+        entityManager.addUsedBonus(fetaBonus);
         fetaBonus.doUsedBonusAction(this);
         carryBonus = false;
-        if (level.theLevel == "level2") bonusCarried = "";
+        if (level.getLevel().equals("level2")) bonusCarried = "";
     }
 
     protected void useRangeBonus() {
         UsedBonus rangeBonus = new RangeBonus(level, this.x + 16, this.y + 16);
-        Level.usedBonusses.add(rangeBonus);
+        entityManager.addUsedBonus(rangeBonus);
         rangeBonus.doUsedBonusAction(this);
         carryBonus = false;
         bonusCarried = "";
@@ -431,7 +339,7 @@ public class Player extends Mob {
 
     protected void useLifeBonus() {
         UsedBonus lifeBonus = new LifeBonus(level, this.x + 16, this.y + 16);
-        Level.usedBonusses.add(lifeBonus);
+        entityManager.addUsedBonus(lifeBonus);
         lifeBonus.doUsedBonusAction(this);
         carryBonus = false;
         bonusCarried = "";
@@ -439,7 +347,7 @@ public class Player extends Mob {
 
     protected void useBombBonus() {
         UsedBonus bombBonus = new BombBonus(level, this.x + 16, this.y + 16);
-        Level.usedBonusses.add(bombBonus);
+        entityManager.addUsedBonus(bombBonus);
         bombBonus.doUsedBonusAction(this);
         carryBonus = false;
         bonusCarried = "";
@@ -485,6 +393,18 @@ public class Player extends Mob {
         return bonusCarried;
     }
 
+    public void setBonusCarried(String bonusCarried) {
+        this.bonusCarried = bonusCarried;
+    }
+
+    public void setCarryBonus(Boolean carryBonus) {
+        this.carryBonus = carryBonus;
+    }
+
+    public void setBonusTimer(Integer bonusTimer) {
+        this.bonusTimer = bonusTimer;
+    }
+
     public void setLife(int life) {
         this.life = life;
     }
@@ -501,4 +421,23 @@ public class Player extends Mob {
         this.speed = speed;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getImmunisation() {
+        return immunisation;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
+
+    public void setNotifies(int notifies) {
+        this.notifies = notifies;
+    }
+
+    public int getNotifies() {
+        return notifies;
+    }
 }

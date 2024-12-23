@@ -27,11 +27,10 @@ public class Bonus extends GameObject {
         center();
     }
 
-
     @Override
     public void update() {
         lifeSpan--;
-        if (lifeSpan < 0 || dieBonusByDef()) {
+        if (lifeSpan < 0 || entityManager.dieBonusByDef(this)) {
             remove();
         }
     }
@@ -40,10 +39,10 @@ public class Bonus extends GameObject {
     @Override
     public void render(Screen screen) {
         if (!removed) {
-            if (level.theLevel == "level1") {
+            if (level.getLevel().equals("level1")) {
                 screen.renderTile(x, y, Tile.bonus);
                 SomeFont.renderW(this.bonusType, screen, x - 16, y - 8, 1);
-            } else if (level.theLevel == "level2") {
+            } else if (level.getLevel().equals("level2")) {
                 renderBonus(screen);
             }
         }
@@ -73,19 +72,6 @@ public class Bonus extends GameObject {
     @Override
     public void remove() {
         removed = true;
-    }
-
-    public boolean dieBonusByDef() {
-        /*
-         * Une bombe touchee par une deflagration fait boom
-         *
-         */
-        for (int i = 0; i < Level.deflagrations.size(); i++) {
-            if (Level.deflagrations.get(i).burnedByCollision(x, y)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean bonusCollision(int x, int y) {

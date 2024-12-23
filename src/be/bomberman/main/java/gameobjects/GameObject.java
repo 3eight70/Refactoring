@@ -2,7 +2,9 @@ package gameobjects;
 
 
 import affichage.Screen;
+import gameobjects.bonus.MusicLogger;
 import levels.Level;
+import levels.managers.EntityManager;
 
 public abstract class GameObject {
 
@@ -16,6 +18,7 @@ public abstract class GameObject {
     protected static Level level;
     protected static Player player;
     protected boolean removed = false;
+    protected EntityManager entityManager;
 
 
     public GameObject(Level level) {
@@ -25,6 +28,7 @@ public abstract class GameObject {
 
     public final void init(Level level) {
         GameObject.level = level;
+        this.entityManager = level.getEntityManager();
     }
 
 
@@ -73,5 +77,11 @@ public abstract class GameObject {
         }
     }
 
+    public int getX() {
+        return x;
+    }
 
+    public int getY() {
+        return y;
+    }
 }

@@ -36,9 +36,9 @@ public class Deflagration extends GameObject {
     @Override
     public void render(Screen screen) {
         if (!removed) {
-            if (level.theLevel == "level1") {
+            if (level.getLevel().equals("level1")) {
                 renderDeflagrationLevel1(screen);
-            } else if (level.theLevel == "level2") {
+            } else if (level.getLevel().equals("level2")) {
                 renderDeflagrationLevel2(screen);
             }
         }

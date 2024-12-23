@@ -38,10 +38,10 @@ public class PlayerBomberman4 extends Player {
                 if (input.H) {
                     xa++;
                 }
-                if (input.R && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb == true) {
+                if (input.R && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb) {
                     useBomb();
                     Bomb bomb = new BasicBomb(x, y, level, this);
-                    Level.bombs.add(bomb);
+                    entityManager.addBomb(bomb);
                     bombRate = BasicBomb.bombRate;
                 }
                 if (carryBonus && input.Y) {
@@ -80,10 +80,10 @@ public class PlayerBomberman4 extends Player {
                     if (input.right) {
                         xa++;
                     }
-                    if (input.space && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb == true) {
+                    if (input.space && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb) {
                         useBomb();
                         Bomb bomb = new BasicBomb(x, y, level, this);
-                        Level.bombs.add(bomb);
+                        entityManager.addBomb(bomb);
                         bombRate = BasicBomb.bombRate;
                         onPlaceBombe = "o";
                     }
@@ -112,7 +112,7 @@ public class PlayerBomberman4 extends Player {
                             System.out.println("ON PLACE UNE BOMBE");
                             bomberman.ilFautPlacerUneBombe = false;
                             Bomb bomb = new BasicBomb(bomberman.coordBombe[0], bomberman.coordBombe[1], level, this);
-                            Level.bombs.add(bomb);
+                            entityManager.addBomb(bomb);
                             bombRate = BasicBomb.bombRate;
 
                         }
@@ -127,8 +127,6 @@ public class PlayerBomberman4 extends Player {
         } else {
             isMoving = false;
         }
-
-
     }
 
 

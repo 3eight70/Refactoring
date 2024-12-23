@@ -40,7 +40,7 @@ public class PlayerBomberman2 extends Player {
                 if (input.A && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb == true) {
                     useBomb();
                     Bomb bomb = new BasicBomb(x, y, level, this);
-                    Level.bombs.add(bomb);
+                    entityManager.addBomb(bomb);
                     bombRate = BasicBomb.bombRate;
                 }
 
@@ -85,7 +85,7 @@ public class PlayerBomberman2 extends Player {
                     if (input.space && bombRate == 0 && Bomb.canBePlaced(x, y) && canplacebomb == true) {
                         useBomb();
                         Bomb bomb = new BasicBomb(x, y, level, this);
-                        Level.bombs.add(bomb);
+                        entityManager.addBomb(bomb);
                         bombRate = BasicBomb.bombRate;
                         onPlaceBombe = "o";
                     }
@@ -114,7 +114,7 @@ public class PlayerBomberman2 extends Player {
                             System.out.println("ON PLACE UNE BOMBE");
                             bomberman.ilFautPlacerUneBombe = false;
                             Bomb bomb = new BasicBomb(bomberman.coordBombe[0], bomberman.coordBombe[1], level, this);
-                            Level.bombs.add(bomb);
+                            entityManager.addBomb(bomb);
                             bombRate = BasicBomb.bombRate;
 
                         }
