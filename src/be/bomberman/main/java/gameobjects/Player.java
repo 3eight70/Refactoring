@@ -13,8 +13,11 @@ import inputs.KeyboardInput;
 import levels.Level;
 import levels.tiles.Tile;
 
+import java.util.Arrays;
+
 public class Player extends Mob {
 
+    private static Integer DEFAULT_TIMER = 211;
     protected String name;
     protected KeyboardInput input;
     protected boolean isDead = false;
@@ -33,15 +36,7 @@ public class Player extends Mob {
     protected int onBomb; //
     protected int beforeBonusCollisionDetection = 0; // detection de collision
     protected int immunisation = 300;
-    protected int bombposedtimer = 211;
-    protected int bombposedtimer2 = 211;
-    protected int bombposedtimer3 = 211;
-    protected int bombposedtimer4 = 211;
-    protected int bombposedtimer5 = 211;
-    protected int bombposedtimer6 = 211;
-    protected int bombposedtimer7 = 211;
-    protected int bombposedtimer8 = 211;
-    protected int bombposedtimer9 = 211;
+    protected Integer[] bombposedTimers = new Integer[10];
     //protected boolean burned = false;
     protected int range, maxbomb, bombposed; //les 3 bonus
     protected int speed = 1;
@@ -69,6 +64,7 @@ public class Player extends Mob {
         this.position[1] = y;
         this.bomberman = bomberman;
 
+        Arrays.fill(bombposedTimers, DEFAULT_TIMER);
     }
 
 
@@ -286,13 +282,16 @@ public class Player extends Mob {
         else immunisation = 0;
 
         teleportTimer++;
-        bombposedtimer++;
-        bombposedtimer2++;
-        bombposedtimer3++;
-        bombposedtimer4++;
-        if (bombposedtimer == 210 || bombposedtimer2 == 210 || bombposedtimer3 == 210 || bombposedtimer4 == 210 ||
-                bombposedtimer5 == 210 || bombposedtimer6 == 210 || bombposedtimer7 == 210 || bombposedtimer8 == 210 ||
-                bombposedtimer9 == 210) bombposed--;
+        bombposedTimers[0]++;
+        bombposedTimers[1]++;
+        bombposedTimers[2]++;
+        bombposedTimers[3]++;
+        for (int i = 0; i < bombposedTimers.length; i++) {
+            if (bombposedTimers[i] == 210) {
+                bombposed--;
+                break;
+            }
+        }
         isMaxBomb();
     }
 
@@ -394,29 +393,10 @@ public class Player extends Mob {
 
     protected void useBomb() {
         bombposed++;
-        if (bombposedtimer >= 210) bombposedtimer = 0;
-        else {
-            if (bombposedtimer2 >= 210) bombposedtimer2 = 0;
-            else {
-                if (bombposedtimer3 >= 210) bombposedtimer3 = 0;
-                else {
-                    if (bombposedtimer4 >= 210) bombposedtimer4 = 0;
-                    else {
-                        if (bombposedtimer5 >= 210) bombposedtimer5 = 0;
-                        else {
-                            if (bombposedtimer6 >= 210) bombposedtimer6 = 0;
-                            else {
-                                if (bombposedtimer7 >= 210) bombposedtimer7 = 0;
-                                else {
-                                    if (bombposedtimer8 >= 210) bombposedtimer8 = 0;
-                                    else {
-                                        if (bombposedtimer9 >= 210) bombposedtimer9 = 0;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        for (Integer bombposedtimer : bombposedTimers) {
+            if (bombposedtimer >= 0) {
+                bombposed = 0;
+                break;
             }
         }
     }
