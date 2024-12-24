@@ -315,11 +315,6 @@ public class Bomberman extends Canvas implements Runnable {
         //JOptionPane.showMessageDialog(startFrame, "You burned one life");
     }
 
-    // modifi� la position de GAME OVER
-    // faire clignoter les joueur dans le monde 1
-    // eventuellement remmetre la position de joueurs au debut quand ils meurent
-    // implementer les bonus dans le monde deux
-
 
     public GamePauseState getGamePauseState() {
         return gamePauseState;

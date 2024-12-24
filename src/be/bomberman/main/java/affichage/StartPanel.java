@@ -1,87 +1,58 @@
 package affichage;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class StartPanel {
-
-    private final JFrame startFrame = new JFrame();
-    private final Dimension size;
-    private BorderLayout border;
-    private final JPanel panel = new JPanel();
-    private final JButton button1;
-    private final JButton button2;
-    private JButton button3;
-    private final int width;
-    private final int height;
-    private final int scale;
+public class StartPanel extends BasePanel {
+    private JButton button1;
+    private JButton button2;
 
     public StartPanel(int WIDTH, int HEIGHT, int SCALE) {
-        this.width = WIDTH;
-        this.height = HEIGHT;
-        this.scale = SCALE;
+        super(WIDTH, HEIGHT, SCALE);
+        setFrameTitle();
+    }
 
-        size = new Dimension(WIDTH * SCALE, HEIGHT * SCALE);
-        startFrame.setMinimumSize(size);
-        startFrame.setMaximumSize(size);
-        startFrame.setPreferredSize(size);
-        startFrame.setTitle("WELCOME");
+    @Override
+    protected ActionListener createActionListener() {
+        return new ListenForButton();
+    }
 
-        panel.setLayout(new GridLayout(0, 1, 8, 8));
+    @Override
+    protected void setFrameTitle() {
+        mainFrame.setTitle("WELCOME");
+    }
 
+    @Override
+    protected void configureButtons(ActionListener actionListener) {
         button1 = new JButton("PLAY ONLINE");
         button1.setToolTipText("Jouer en ligne avec un ami");
-        ListenForButton lForButton = new ListenForButton();
-        button1.addActionListener(lForButton);
+        button1.addActionListener(actionListener);
         button2 = new JButton("PLAY OFFLINE");
         button1.setFont(new Font("Courier", Font.PLAIN, scale * 40));
         button2.setToolTipText("Jouer avec un ami sur le meme clavier");
-        button2.addActionListener(lForButton);
+        button2.addActionListener(actionListener);
         button2.setFont(new Font("Courier", Font.PLAIN, scale * 40));
-
 
         panel.add(button1);
         panel.add(button2);
-        startFrame.add(panel);
-        startFrame.setFocusable(true);
-        //frame.setResizable(false);
-
-        startFrame.pack();
-        startFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        startFrame.setLocationRelativeTo(null);
-        startFrame.setVisible(true);
-
     }
-
-    //*************************************************************************************************
 
     private class ListenForButton implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == button1) {
-                startFrame.dispose();
-                UDPTCPPanel frame = new UDPTCPPanel(width, height, scale);
-                //JOptionPane.showMessageDialog(button1, this, "Ask Daniel", 0);
+                mainFrame.dispose();
+                // Не удалять, нужно для создания окна
+                new UDPTCPPanel(width, height, scale);
+            } else if (e.getSource() == button2) {
+                mainFrame.dispose();
+                // Не удалять, нужно для создания окна
+                new WorldPanelOffline(width, height, scale);
             }
-            if (e.getSource() == button2) {
-                startFrame.dispose();
-                WorldPanel frame = new WorldPanel(width, height, scale);
-            }
-
         }
-
     }
-
-    //*************************************************************************************************
-
-
-}	
+}
 
