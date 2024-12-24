@@ -27,7 +27,7 @@ public class FirePower extends UsedBonus {
     @Override
     public void render(Screen screen) {
         if (!removed) {
-            if (level.theLevel == "level1") screen.renderTile(x, y, Tile.burningGrass);
+            if (level.getLevel().equals("level1")) screen.renderTile(x, y, Tile.burningGrass);
             else {
                 screen.renderTile(x, y, Tile.spike);
             }

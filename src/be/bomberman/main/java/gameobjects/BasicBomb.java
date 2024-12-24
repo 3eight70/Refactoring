@@ -3,7 +3,6 @@ package gameobjects;
 
 import affichage.Screen;
 import affichage.SheetSquare;
-import bomberman.Bomberman;
 import levels.Level;
 import levels.tiles.Tile;
 
@@ -20,7 +19,7 @@ public class BasicBomb extends Bomb {
     @Override
     public void update() {
         timer++;
-        if (timer == 210 || dieBombByDef()) {
+        if (timer == 210 || entityManager.dieBonusByDef(this)) {
             boom();
             remove();
             level.setTile((x + 10) >> 5, (y + 10) >> 5, 0xff00FF00);
@@ -28,25 +27,12 @@ public class BasicBomb extends Bomb {
 
     }
 
-    public boolean dieBombByDef() {
-        /*
-         * Une bombe touchee par une deflagration fait boom
-         *
-         */
-        for (int i = 0; i < Level.deflagrations.size(); i++) {
-            if (Level.deflagrations.get(i).burnedByCollision(x, y)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public void render(Screen screen) {
         if (!removed) {
-            if (level.theLevel == "level1") {
+            if (level.getLevel() == "level1") {
                 screen.renderTile(x, y, Tile.basicbomb);
-            } else if (level.theLevel == "level2") {
+            } else if (level.getLevel() == "level2") {
                 //System.out.println("rendering bomb");
                 if (timer % 210 < 70)
                     screen.renderEntity(x, y, SheetSquare.basicbomb1, 32, false, false, 0xff527B9C); //NEW
@@ -60,8 +46,8 @@ public class BasicBomb extends Bomb {
 
     @Override
     public void boom() {
-        Level.deflagrations.add(new Deflagration(x, y, level, 1, player.getRange()));
-        if (!Bomberman.musicIsPaused) System.out.println("boom");
+        entityManager.addDeflagration(new Deflagration(x, y, level, 1, player.getRange()));
+        entityManager.notifyObservers("boom");
     }
 
 

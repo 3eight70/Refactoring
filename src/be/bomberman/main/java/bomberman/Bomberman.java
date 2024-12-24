@@ -38,36 +38,17 @@ public class Bomberman extends Canvas implements Runnable {
     public static int HEIGHT;
     public static int SCALE = 1;
     public static final String NAME = "bomberman.Bomberman";
-    /*
-     * Defini les dimensions du JFrame (en pixels * SCALE)
-     */
 
     public int timer = 0;
     private GamePauseState gamePauseState = new GameOnStateGame();
     private MusicPauseState musicPauseState = new MusicOnStateGame();
-    public int timePressedPauseGame = 0, timePressedPauseMusic = 0;
     public boolean runningMusic = false;
     public boolean running = false;
     public static boolean musicIsPaused = false;
 
-    /*
-     * Boolean indiquant si le jeu a commenc� ou est fini.
-     * Est utilis� dans la boucle principale pour savoir quand elle doit s'ex�cuter
-     */
-
-
     public BufferedImage image;
     public int[] pixels;
-    /*
-     *  On cr�e une BufferedImage qui va etre dessin�e avec drawgraphics
-     *
-     *  (Raster = data structure which represents a rectangular grid(array) of pixels)
-     *  On construit ici un espace pixelis� pour la BufferedImage image associ� au tableau pixel[] qui
-     *  va acceuillir les pixels de la classe screen
-     */
-
     public JFrame frame;
-    //public JPanel panel;
     private Thread thread;
     private StartPanel frame2;
     public Screen screen;
@@ -79,46 +60,36 @@ public class Bomberman extends Canvas implements Runnable {
     public Player player1, player2, player3, player4;
 
 
-    //j'ai ajout�� des publiques
     public GameClient socketClient;
     public GameClientTCP socketClientTCP;
-    public int[] portServers = {5000, 5001, 5002, 5003}; //port 5000 pour MANO, pour 5001 pour DanZi
+    public int[] portServers = {5000, 5001, 5002, 5003};
     public int choixPort;
     public String ipAdressServer;
     public String playerName = "";
     public Boolean jouerEnLigne = false;
     public String msg = "";
 
-    public Integer[] anciennePosX = new Integer[4]; //0 pour bomberman, 1 pour bombergirl, 2 pour Zelda, 3 pour Link OU BIEN 0 pour mano, 1 ppour DanZi
+    public Integer[] anciennePosX = new Integer[4];
     public Integer[] anciennePosY = new Integer[4];
 
     public String protocol;
     public Boolean ilFautPlacerUneBombe = false;
     public Integer[] coordBombe = new Integer[2];
 
-    //JOptionPane.showInputDialog(this, "Enter the name of player 1: ");
 
     public Bomberman(String theLevel, int width, int height) {
         WIDTH = width;
         HEIGHT = height;
         frame = new JFrame(NAME);
-        //panel = new JPanel();
-        //socketClient = new GameClient(this,"localhost"); //modifier aussi le port
-        //socketClientTCP = new GameClientTCP(this,"localhost",5000);
-
-        //initBomberman(theLevel);
     }
 
     private void initBomberman(String theLevel) {
-
-
-        //this.addMouseListener(new MouseInput(this));
         keys = new KeyboardInput(this);
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         mouse = new MouseInput(this);
 
-        if (theLevel == "level1") {
+        if (theLevel.equals("level1")) {
             screen = new Screen(WIDTH, HEIGHT);
             level = new Level1("/Levels/LEVEL1F.png");
             player1 = new Player2(level, 2, 2, "MANO", keys, null);
@@ -127,28 +98,16 @@ public class Bomberman extends Canvas implements Runnable {
             level.addPlayer(player1);
             level.addPlayer(player2);
             level.addPlayer(ghost);
-        } else if (theLevel == "level2") {
+        } else if (theLevel.equals("level2")) {
             screen = new Screen(WIDTH, HEIGHT);
             level = new Level2("/Levels/LEVEL2Fm.png");
 
             player1 = new PlayerBomberman(level, 6, 2, "Rosette", keys, null);
-            //player2 = new PlayerBomberman3(level, 20, 2, "Miyu", keys, null); //NEW
-            //player3 = new PlayerBomberman4(level, 20, 14, "MANO", keys, null);
-            //player4 = new PlayerBomberman2(level, 6, 14, "DanZi", keys, null);
             level.addPlayer(player1);
-            //level.addPlayer(player2);
-            //level.addPlayer(player3);
-            //level.addPlayer(player4);
         }
     }
 
     public synchronized void start() {
-        /*
-         * Synchronization: empeche les threads d'interferer entre eux?
-         * bomberman.start() dans PanelStuff
-         * Cette fonction lance le jeu
-         */
-
         running = true;
         thread = new Thread(this, "Display");
         thread.start();
@@ -166,40 +125,23 @@ public class Bomberman extends Canvas implements Runnable {
 
 
     public void run() {
-
-        /*
-         * Cette fonction est la boucle principale du bomberman
-         * Elle appelle la methode update() 60 fois par seconde
-         * Le nobre de FPS depend de l'ordinateur
-         */
-
-        /*
-         *  long startTime = System.nanoTime();
-         *  long estimatedTime = System.nanoTime() - startTime;
-         *
-         *  ==> nanoTime sert a mesurer le temps entre deux instances
-         */
-
         long lastTime = System.nanoTime();
-        double nsPerTick = 1000000000D / 60D; // 60 updates par seconde
+        double nsPerTick = 1000000000D / 60D;
         int updates = 0;
         int frames = 0;
 
-        long lastTimer = System.currentTimeMillis(); // Returns the current time in milliseconds.
-        double delta = 0; // nombre de nanosecondes pass�es /nsPerTick ==> nbr de updates
-
-        //init();
+        long lastTimer = System.currentTimeMillis();
+        double delta = 0;
 
         while (running) {
 
             long now = System.nanoTime();
-            delta += (now - lastTime) / nsPerTick; // calcule le nombre de updates
+            delta += (now - lastTime) / nsPerTick;
             lastTime = now;
 
             boolean shouldRender = true;
 
-            while (delta >= 1) { // pour chaque tick appelle la methode update()
-                //System.out.println(pausestate);
+            while (delta >= 1) {
                 updates++;
                 delta--;
                 shouldRender = true;
@@ -210,15 +152,14 @@ public class Bomberman extends Canvas implements Runnable {
                 frames++;
                 render();
             }
-            if (System.currentTimeMillis() - lastTimer > 1000) {    //1000 = 1s
+            if (System.currentTimeMillis() - lastTimer > 1000) {
                 lastTimer += 1000;
                 System.out.println("FPS: " + frames + ", ticks per second: " + updates);
                 frames = 0;
                 updates = 0;
             }
         }
-    } //FIN de la METHODE run()
-
+    }
 
     public void update() {
         mouse.update();
@@ -235,29 +176,26 @@ public class Bomberman extends Canvas implements Runnable {
         } else {
             runningMusic = false;
         }
-
-        //if (!bomberman.Bomberman.musicIsPaused && timer == 1) Sound.gamestart.play();
     }
 
     public void render() {
         BufferStrategy bs = getBufferStrategy();
         if (bs == null) {
             this.createBufferStrategy(3);
-            // calcul en avance les trois prochaines images
-            this.requestFocus(); // plac� dans KeyboardInput aussi
+            this.requestFocus();
             return;
         }
 
-        screen.clear(); // inutile
+        screen.clear();
 
 
-        if (level.theLevel == "level1") {
+        if (level.getLevel().equals("level1")) {
             int xOffset = ghost.x - screen.getWidth() / 2;
             int yOffset = ghost.y - screen.getHeight() / 2;
-            level.renderTile(screen, xOffset, yOffset);
+            level.getTileManager().renderTiles(screen, xOffset, yOffset);
             level.renderEntities(screen, this);
-        } else if (level.theLevel == "level2") {
-            level.renderTile(screen, 0, 0);
+        } else if (level.getLevel().equals("level2")) {
+            level.getTileManager().renderTiles(screen, 0, 0);
             level.renderEntities(screen, this);
 
 
@@ -317,7 +255,7 @@ public class Bomberman extends Canvas implements Runnable {
 
         String msg = "GAME OVER!";
 
-        if (level.theLevel == "level1") {
+        if (level.getLevel() == "level1") {
             if (player1.getShouldRenderFont() || player2.getShouldRenderFont()) {
                 player1.x = 2 << 5;
                 player2.x = 13 << 5;
@@ -325,7 +263,7 @@ public class Bomberman extends Canvas implements Runnable {
                 player2.y = 2 << 5;
                 SomeFont.renderT(msg, screen, screen.getXOffset() + screen.getWidth() / 2 - (msg.length() / 2) * 16, screen.getYOffset() + screen.getHeight() / 2, 3);
             }
-        } else if (level.theLevel == "level2") {
+        } else if (level.getLevel() == "level2") {
             if (player1.getShouldRenderFont() && player2.getShouldRenderFont() && player3.getShouldRenderFont()) {
                 SomeFont.renderW("Link won !", screen, screen.getXOffset() + screen.getWidth() / 2 - (msg.length() / 2) * 16 + 15, 48 + screen.getYOffset() + screen.getHeight() / 2, 3);
             }
@@ -376,11 +314,6 @@ public class Bomberman extends Canvas implements Runnable {
         StartPanel startFrame = new StartPanel(608, 544, SCALE);
         //JOptionPane.showMessageDialog(startFrame, "You burned one life");
     }
-
-    // modifi� la position de GAME OVER
-    // faire clignoter les joueur dans le monde 1
-    // eventuellement remmetre la position de joueurs au debut quand ils meurent
-    // implementer les bonus dans le monde deux
 
 
     public GamePauseState getGamePauseState() {

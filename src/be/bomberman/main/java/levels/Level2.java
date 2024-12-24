@@ -11,9 +11,7 @@ import gameobjects.bonus.Bonus;
 import levels.tiles.AnimatedSolidTile;
 import levels.tiles.Tile;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Level2 extends Level {
@@ -78,22 +76,6 @@ public class Level2 extends Level {
         animatedSolidTileMap.put(0xff60eeee, new AnimatedSolidTile(Tile.house15, Tile.house15b, Tile.house15c, Tile.house15d));
     }
 
-    protected void loadLevelFromFile(String imagePath) {
-
-        try {
-            image = ImageIO.read(Level1.class.getResource(imagePath));
-            this.width = image.getWidth();
-            this.height = image.getHeight();
-            tilesColours = new int[width * height];
-            tilesColours = image.getRGB(0, 0, width, height, null, 0, width);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Could not load level file");
-        }
-    }
-
-
     public void updateEntities() {
         super.updateEntities();
         if (animation < 13000) animation++; // augmente de 60 toute les secondes
@@ -102,11 +84,11 @@ public class Level2 extends Level {
         // Ici on pourrait utiliser le factory pattern
         updates++;
         if ((updates % 1200) == 0) {        //tous les 20 secondes
-            if (!Bomberman.musicIsPaused) System.out.println("bonusSpawn");
+            entityManager.notifyObservers("bonusSpawn");
             int bonusIndex = r.nextInt(5);
             updates = 0;
 
-            bonusses.add(new Bonus(this, bonusCoord(), bonusTypes[bonusIndex]));
+            entityManager.addBonus(new Bonus(this, entityManager.bonusCoord(), bonusTypes[bonusIndex]));
         }
     }
 

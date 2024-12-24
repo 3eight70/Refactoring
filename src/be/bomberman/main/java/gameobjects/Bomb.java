@@ -28,9 +28,9 @@ public abstract class Bomb extends GameObject {
         /*
          * Seul les coord en haut a gauche son n�cessaire car les autres bords du joueur ne peuvent pas etre su un autre tile
          */
-        if (level.theLevel == "level1") {
+        if (level.getLevel() == "level1") {
             return level.getTile((x + 16) >> 5, (y + 16) >> 5) == Tile.grass;
-        } else if (level.theLevel == "level2") {
+        } else if (level.getLevel() == "level2") {
             return level.getTile((x + 16) >> 5, (y + 16) >> 5) == Tile.grassLevel2;
         }
 
